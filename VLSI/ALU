@@ -114,5 +114,5 @@ net s(1) loc=p86;
 net s(0) loc=p87;
 net c(3) loc=p167;
 net c(2) loc=p166;
-net c(1) loc=p165
+net c(1) loc=p165;
 net c(0) loc=p162;
