@@ -1,0 +1,121 @@
+--VHDL CODE
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ENTITY shiftreg IS
+END shiftreg;
+ARCHITECTURE behavior OF shiftreg IS
+COMPONENT unishiftreg
+PORT(
+si : IN std_logic;
+clk : IN std_logic;
+so : OUT std_logic;
+pin : IN std_logic_vector(3 downto 0);
+po : OUT std_logic_vector(3 downto 0);
+sel : IN std_logic_vector(1 downto 0)
+);
+END COMPONENT;
+--Inputs
+signal si : std_logic := '0';
+signal clk : std_logic := '0';
+signal pin : std_logic_vector(3 downto 0) := (others => '0');
+signal sel : std_logic_vector(1 downto 0) := (others => '0');
+--Outputs
+signal so : std_logic;
+signal po : std_logic_vector(3 downto 0);
+constant clk_period : time := 10 ns;
+BEGIN
+uut: unishiftreg PORT MAP (
+si => si,
+clk => clk,
+so => so,
+pin => pin,
+po => po,
+sel => sel
+);
+clk_process :process
+begin
+clk <= '0';
+wait for clk_period/2;
+clk <= '1';
+wait for clk_period/2;
+end process;
+stim_proc: process
+begin
+wait for 100 ns;
+wait for clk_period*10;
+end process;
+END;
+
+
+--TestBench:
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ENTITY tb IS
+END tb;
+ARCHITECTURE behavior OF tb IS
+COMPONENT unishiftreg
+PORT(
+si : IN std_logic;
+clk : IN std_logic;
+so : OUT std_logic;
+pin : IN std_logic_vector(3 downto 0);
+po : OUT std_logic_vector(3 downto 0);
+sel : IN std_logic_vector(1 downto 0)
+);
+END COMPONENT;
+--Inputs
+signal si : std_logic := '0';
+signal clk : std_logic := '0';
+signal pin : std_logic_vector(3 downto 0) := (others => '0');
+signal sel : std_logic_vector(1 downto 0) := (others => '0');
+--Outputs
+signal so : std_logic;
+signal po : std_logic_vector(3 downto 0);
+constant clk_period : time := 10 ns;
+BEGIN
+uut: unishiftreg PORT MAP (
+si => si,
+clk => clk,
+so => so,
+pin => pin,
+po => po,
+sel => sel
+);
+clk_process :process
+begin
+clk <= '0';
+wait for clk_period/2;
+clk <= '1';
+wait for clk_period/2;
+end process;
+stim_proc: process
+begin
+sel <= "00";
+si <= '1';
+wait for 100 ns;
+sel <= "01";
+si <= '1';
+wait for 100 ns;
+sel <= "10";
+pin <= "1010";
+wait for 100 ns;
+wait;
+end process;
+END;
+
+
+--UCF File:
+NET "clk" LOC = P132;
+NET "reset" LOC = P204;
+NET "sl_in" LOC = P179;
+NET "sr_in" LOC = P180;
+NET "sel<0>" LOC = P165;
+NET "sel<1>" LOC = P167;
+NET "datain<0>" LOC = P192;
+NET "datain<1>" LOC = P193;
+NET "datain<2>" LOC = P189;
+NET "datain<3>" LOC = P190;
+NET "dataout<0>" LOC = P205;
+NET "dataout<1>" LOC = P206;
+NET "dataout<2>" LOC = P203;
+NET "dataout<3>" LOC = P200;
