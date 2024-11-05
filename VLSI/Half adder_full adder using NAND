@@ -1,0 +1,118 @@
+--Testbench:
+--Half adder
+library IEEE;
+entity HA is
+Port ( a : in STD_LOGIC;
+b : in STD_LOGIC;
+sum : out STD_LOGIC;
+carry : out STD_LOGIC);
+end HA;
+architecture Behavioral of HA is
+begin
+sum<= a xor b;
+carry<= a and b;
+end Behavioral;
+
+
+--Full adder Program
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+entity fa is
+Port ( a : in STD_LOGIC;
+b : in STD_LOGIC;
+cin : in STD_LOGIC;
+s : out STD_LOGIC;
+cot : out STD_LOGIC);
+end fa;
+architecture Behavioral of fa is
+component HA
+Port ( a : in STD_LOGIC;
+b : in STD_LOGIC;
+sum : out STD_LOGIC;
+carry : out STD_LOGIC);
+end component;
+signal s1, c1, c2: std_logic
+begin
+HA1: HA port map( a,b, s1, c1);
+HA2: HA port map(s1, cin, s, c2);
+cot<= c1 or c2;
+end Behavioral;
+
+
+--Testbench:
+ENTITY bbbb IS
+END bbbb;
+ARCHITECTURE behavior OF bbbb IS
+COMPONENT fa111
+PORT(
+a : IN std_logic;
+b : IN std_logic;
+cin : IN std_logic;
+s : OUT std_logic;
+cout : OUT std_logic
+);
+END COMPONENT;
+--Inputs
+signal a : std_logic := '0';
+signal b : std_logic := '0';
+signal cin : std_logic := '0';
+--Outputs
+signal s : std_logic;
+signal cout : std_logic;
+BEGIN
+uut: fa111 PORT MAP (
+a => a,
+b => b,
+cin => cin,
+s => s,
+cout => cout
+);
+stim_proc: process
+begin
+a<='0';
+b<='0';
+cin<='0';
+wait for 100 ns;
+a<='0';
+b<='0';
+cin<='1';
+wait for 100 ns;
+a<='0';
+b<='1';
+cin<='0';
+wait for 100 ns;
+a<='0';
+b<='1';
+cin<='1';
+wait for 100 ns;
+a<='1';
+b<='0';
+cin<='0';
+wait for 100 ns;
+a<='1';
+b<='0';
+cin<='1';
+wait for 100 ns;
+a<='1';
+b<='1';
+cin<='0';
+wait for 100 ns;
+a<='1';
+b<='1';
+cin<='1';
+wait for 100 ns;
+a<='0';
+b<='0';
+cin<='0';
+wait for 100 ns;
+wait;
+end process;
+END;
+
+
+--UCF:
+net a loc = p87;
+net b loc= p86;
+net cin loc= p85;
+net s loc = p162;
+net cot loc = p165;
