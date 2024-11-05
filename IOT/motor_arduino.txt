@@ -1,0 +1,12 @@
+int DCMOTOR = 13;
+int delayT = 1000;
+void setup() {
+// put your setup code here, to run once:
+pinMode(DCMOTOR, OUTPUT);
+}
+void loop() {
+// put your main code here, to run repeatedly:
+digitalWrite(DCMOTOR, HIGH);
+delay(delayT);
+digitalWrite(LEDpin, LOW);
+delay(delayT);

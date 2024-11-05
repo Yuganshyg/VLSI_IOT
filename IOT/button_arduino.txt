@@ -1,0 +1,23 @@
+const int buttonPin = 8;  // Digital Pin 8 define as a push Button pin
+const int ledPin = 10; // Digital Pin 13 define as LED Pin
+int buttonState = 0; // Variable for reading the pushbutton status
+
+void setup() {
+pinMode(ledPin, OUTPUT);
+pinMode(buttonPin, INPUT);
+Serial.begin(9600);
+}
+
+void loop() {
+buttonState = digitalRead(buttonPin);
+if (buttonState HIGH)
+{
+digitalWrite(ledPin, HIGH);
+Serial.println("Button Pressed");
+}
+else
+{
+digitalWrite(ledPin, LOW);
+Serial.println("Button Not Pressed");
+}
+}
