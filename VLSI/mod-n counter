@@ -1,0 +1,74 @@
+--Testbench:
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_unsigned.ALL;
+entity modncount is
+Port ( clk : in STD_LOGIC;
+clr : in STD_LOGIC;
+q : inout STD_LOGIC_VECTOR (2 downto 0));
+end modncount;
+architecture Behavioral of modncount is
+signal count: std_logic_vector(2 downto 0);
+begin
+process(clk)
+begin
+if (clr='1') then count <= "000";
+elsif (rising_edge (clk)) then
+if (count="100")
+then count <= "000";
+else
+count<=count+ 1;
+end if;
+end if;
+end process;
+q<=count;
+end Behavioral;
+
+
+--Testbench:
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ENTITY hhh IS
+END hhh;
+ARCHITECTURE behavior OF hhh IS
+COMPONENT modncount
+PORT(
+clk : IN std_logic;
+clr : IN std_logic;
+q : INOUT std_logic_vector(2 downto 0)
+);
+END COMPONENT;
+--Inputs
+signal clk : std_logic := '0';
+signal clr : std_logic := '0';
+signal q : std_logic_vector(2 downto 0);
+BEGIN
+uut: modncount PORT MAP (
+clk => clk,
+clr => clr,
+q => q
+);
+clk_process :process
+begin
+clk <= '0';
+wait for 10 ns;
+clk <= '1';
+wait for 10 ns;
+end process;
+stim_proc: process
+begin
+clr<='1';
+wait for 20 ns;
+clr<='0';
+wait for 20 ns;
+wait;
+end process;
+END;
+
+
+--UCF
+Net clk loc=”p182”;
+Net clr loc=”p102”;
+Net q(2) loc=”p165”;
+Net q(2) loc=”p166”;
+Net q(2) loc=”p167”;
