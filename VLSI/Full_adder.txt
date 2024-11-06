@@ -1,0 +1,13 @@
+// DSCH Ver 3.0
+// 06-11-2024 12:03:10
+// D:\Softwares\VLSI DHCH\MICROWIND INC- SCH\MICROWIND INC\MICROWIND3 Client\DSCH3\Full_adder.sch
+
+module Full_adder( in1,in2,in3,out1,out2);
+ input in1,in2,in3;
+ output out1,out2;
+ xor xor2(w3,in1,in2);
+ xor xor2(out1,w4,in3);
+ and and2(w7,w4,in3);
+ and and2(w9,in2,w8);
+ or or2(out2,w7,w9);
+endmodule
