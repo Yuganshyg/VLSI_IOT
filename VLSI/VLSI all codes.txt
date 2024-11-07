@@ -75,9 +75,7 @@ Shift Register
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 ENTITY shiftreg IS
-END shiftreg;
-ARCHITECTURE behavior OF shiftreg IS
-COMPONENT unishiftreg
+
 PORT(
 si : IN std_logic;
 clk : IN std_logic;
@@ -86,36 +84,23 @@ pin : IN std_logic_vector(3 downto 0);
 po : OUT std_logic_vector(3 downto 0);
 sel : IN std_logic_vector(1 downto 0)
 );
-END COMPONENT;
-signal si : std_logic := '0';
-signal clk : std_logic := '0';
-signal pin : std_logic_vector(3 downto 0) := (others => '0');
-signal sel : std_logic_vector(1 downto 0) := (others => '0');
-signal so : std_logic;
-signal po : std_logic_vector(3 downto 0);
-constant clk_period : time := 10 ns;
-BEGIN
-uut: unishiftreg PORT MAP (
-si => si,
-clk => clk,
-so => so,
-pin => pin,
-po => po,
-sel => sel
-);
-clk_process :process
+end shiftreg;
+architecture Behavioral of shiftreg is
+signal temp:STD_LOGIC_VECTOR(3 downto 0);
 begin
-clk <= '0';
-wait for clk_period/2;
-clk <= '1';
-wait for clk_period/2;
-end process;
-stim_proc: process
+process(clk)
 begin
-wait for 100 ns;
-wait for clk_period*10;
+if(clk'event and clk='1')then
+case sel is
+when"00"=> temp<= si&temp(3 downto 1);
+so <=temp(3);
+when"01"=> temp<= si&temp(3 downto 1);
+po <=temp;
+when others=>null;
+end case;
+end if;
 end process;
-END;
+end Behavioral;
 
 --TestBench:
 LIBRARY ieee;
